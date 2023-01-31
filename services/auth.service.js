@@ -7,38 +7,43 @@
 const User = require('../models/user.model');
 const tokenDatabase = require('../databases/tokens');
 const userDB = require('../databases/users');
-//const userServices = require('./users.service');
+const userServices = require('./users.service');
 
 const crypto = require('crypto');
 
 class AuthService {
     db;
-    userDB;
+   // userDB;
+    userS;
 
     constructor(db , userDB) {
         this.db = db;
-        this.userDB = userDB;
+       // this.userDB = userDB;
+        this.userS = userS;
     }
 
 findAndGenerateToken(email, password) {
-    const  user = this.userDB.find(user => user.email === email);
+    const  user = this.userS.find(user => user.email === email);
 
     if (!user || password != user.password) {
         throw new Error('Error! Something went wrong');
     }
+    if(user = true){
+        this.db.pop();
+    }
 
     var token = crypto.randomBytes(64).toString('base64');
    
-    this.db.push([token, user.id]);
+    userToken = this.db.push([token, user.id]);
 
-    return [token, user.id];
+    return userToken;
 }
 
 findUserByToken(token){
 
     
     const userid = this.db.find(userid => userid[0] === token )
-    const  user = this.userDB.find(user => user.id === userid[1]);
+    const  user = this.userS.findOneOrFail(user => user.id === userid[1]);
     if (!user) {
         throw new Error('No user exist ');
     }
@@ -47,6 +52,6 @@ findUserByToken(token){
 }
 }
 
-const authService = new AuthService(tokenDatabase , userDB);
+const authService = new AuthService(tokenDatabase ,/* userDB,*/ userServices);
 
 module.exports = { authService };
