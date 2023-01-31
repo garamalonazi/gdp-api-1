@@ -11,7 +11,7 @@ const router = express.Router();
 router.post('/', (req, res, next) => {
     try {
         const { name, email, password } = req.body;
-
+       
         if (!name || !email || !password) {
             return res.status(400).json({
                 message: 'Bad Request',
@@ -23,6 +23,7 @@ router.post('/', (req, res, next) => {
         res.json({
             user,
         });
+
     } catch (e) {
         throw new HttpError(500, e.message);
     }

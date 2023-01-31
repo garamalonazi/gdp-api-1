@@ -2,6 +2,8 @@ const express = require('express');
 
 const logger = require('./middlewares/logger.middleware');
 const usersRouter = require('./routes/users/users.router');
+const authRouter = require('./routes/auth/auth.router');
+
 const errorHandlerMiddleware = require("./middlewares/error-handler.middleware");
 
 const app = express();
@@ -19,6 +21,7 @@ app.use((req, res, next) => {
 app.use(logger);
 
 app.use('/users', usersRouter);
+app.use('/auth', authRouter);
 
 app.use(errorHandlerMiddleware);
 
