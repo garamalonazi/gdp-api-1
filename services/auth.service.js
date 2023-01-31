@@ -16,7 +16,7 @@ class AuthService {
    // userDB;
     userS;
 
-    constructor(db , userDB) {
+    constructor(db , userS) {
         this.db = db;
        // this.userDB = userDB;
         this.userS = userS;
