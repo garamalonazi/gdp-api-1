@@ -6,21 +6,20 @@
 // 2. Create a method that will take in a token and return the user's who owns the token.
 //const User = require('../models/user.model');
 const tokenDatabase = require('../databases/tokens');
-const userDB = require('../databases/users');
+//const userDB = require('../databases/users');
 const {usersService} = require('./users.service');
 
 const crypto = require('crypto');
+const { stack } = require('../routes/auth/auth.router');
 
 class AuthService {
     db;
-    userDB;
     us;
 
 
-    constructor(db, userDB, userServices) {
+    constructor(db, userServices) {
         this.db = db;
         this.us = userServices;
-        this.userDB = userDB;
         
     }
 
@@ -31,7 +30,7 @@ class AuthService {
             throw new Error('Error! Something went wrong');
         }
         if(user){
-            this.db.pop();
+           const lastLogin = this.db.pop();
         }
        
 
@@ -56,6 +55,6 @@ class AuthService {
     }
 }
 
-const authService = new AuthService(tokenDatabase, userDB , usersService);
+const authService = new AuthService(tokenDatabase , usersService);
 
 module.exports = { authService };
